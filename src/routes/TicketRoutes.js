@@ -1,6 +1,7 @@
 const baseRoute = require('./base/baseRoute')
 const Joi = require('joi')
 const moment = require('moment-timezone')
+const EnviarEmail = require('./../helpers/enviarEmail')
 const DATA_ATUAL = moment().tz("America/Sao_Paulo").format()
 
 class TicketRoutes extends baseRoute {
@@ -114,9 +115,29 @@ class TicketRoutes extends baseRoute {
           }
         }
       },
-      handler: (request, headers) => {
+      handler: async (request, headers) => {
         const payload = request.payload;
         const id = request.params.id;
+        if(payload.status === 'ENCERRADO' && payload.dtEncerramento){
+          // Manda e-mail para o usuario informando do encerramento
+          const mailOptions = {
+            from: process.env.USER_EMAIL,
+            to: email,
+            subject: "Chamado Encerrado",
+            text: "Chamado Encerrado",
+            html: `
+              <h1>${payload.titulo}</h1>
+              ${payload.interacoes.map(interacao => `
+                <div>
+                  <p>${interacao.usuario} - ${interacao.data}</p>
+                  <p>${texto}</p>
+                </div>
+              `.trim()).join('')}
+            `
+          }
+          const transporter = await EnviarEmail.criaServidor()
+          await transporter.sendMail(mailOptions)
+        }
         return this.db.update(id, payload)
       }
     }

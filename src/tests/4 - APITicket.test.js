@@ -1,11 +1,30 @@
 const assert = require('assert')
 const api = require('../../api')
 let app = {}
-let MOCK_ID = '5c6497d1d0b14c2304587edf'
+let MOCK_ID = '5cb499469774b1337832e77c'
 let USUARIO_ID = '5c5df41b39d64c19080f177c'
 let SUPORTE_ID = '5c60223311a3b92f70ca0041'
 let CATEGORIA_ID = '5cb0f12cf2e1a426988758c2'
 let MODULO_ID = '5cb1c799f81e9c2430d1bc96'
+let MOCK_TICKET = {
+  titulo: 'Alterar o ULMES da filial 20',
+  categoria: CATEGORIA_ID,
+  modulo: MODULO_ID,
+  usuario: USUARIO_ID,
+  suporte: SUPORTE_ID,
+  status: 'Em Atendimento',
+  totvs: '',
+  ccusto: '01000IN',
+  setor: 'TI',
+  dtAbertura: Date.now(),
+  dtEncerramento: Date.now(),
+  interacoes: [
+    {
+      texto: 'Solicito a alteração do parametro ULMES da filial 20 para a data 31/01/2019',
+      usuario: USUARIO_ID
+    }
+  ],
+}
 let INTERACAO = {
   usuario: USUARIO_ID,
   texto: 'Incluindo interação com a nova rota',
@@ -21,25 +40,7 @@ function cadastrarTicket(){
     method: 'POST',
     url: '/ticket',
     headers,
-    payload: {
-      titulo: 'Alterar o ULMES da filial 20',
-      categoria: CATEGORIA_ID,
-      modulo: MODULO_ID,
-      usuario: USUARIO_ID,
-      suporte: SUPORTE_ID,
-      status: 'Em Atendimento',
-      totvs: '',
-      ccusto: '01000IN',
-      setor: 'TI',
-      dtAbertura: Date.now(),
-      dtEncerramento: Date.now(),
-      interacoes: [
-        {
-          texto: 'Solicito a alteração do parametro ULMES da filial 20 para a data 31/01/2019',
-          usuario: USUARIO_ID
-        }
-      ],
-    }
+    payload: MOCK_TICKET
   })
 }
 
@@ -53,7 +54,6 @@ describe('APITicket Test', function(){
   it('POST em /ticket - Cadastro de Ticket', async () => {
     const result = await cadastrarTicket()
     const payload = JSON.parse(result.payload)
-    console.log(payload)
     assert.deepEqual(result.statusCode, 200)
     assert.deepEqual(payload.categoria, CATEGORIA_ID)
   })
@@ -99,6 +99,7 @@ describe('APITicket Test', function(){
   
   it('PATCH em /ticket/{id} - Atualizar ticket', async () => {
     const MOCK_ATUALIZA = {
+      ...MOCK_TICKET,
       titulo: 'Instalar o validador da DIRF 2019',
       categoria: CATEGORIA_ID,
       modulo: MODULO_ID
@@ -109,7 +110,7 @@ describe('APITicket Test', function(){
       headers,
       payload: MOCK_ATUALIZA
     })
-    
+  
     assert.deepEqual(result.statusCode, 200) 
     assert.deepEqual(JSON.parse(result.payload).nModified, 1)
   })
