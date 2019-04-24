@@ -11,25 +11,29 @@ const ticketSchema = new Mongoose.Schema({
     required: true
   },
   categoria: {
-    type: ObjectId,
+    type: String,
     required: true
   },
   modulo: {
-    type: ObjectId
+    type: String
   },
   totvs: {
     type: String
-  },
-  ccusto: {
-    type: String,
-    required: true
   },
   setor:{
     type: String,
     required: true
   },
   usuario: {
-    type: ObjectId
+    nome: {
+      type: String
+    },
+    setor: {
+      type: String
+    },
+    ccusto: {
+      type: String
+    }
   },
   suporte: {
     type: ObjectId
@@ -44,7 +48,15 @@ const ticketSchema = new Mongoose.Schema({
   }],
   interacoes: [{
     usuario: {
-      type: ObjectId
+      nome: {
+        type: String
+      },
+      setor: {
+        type: String
+      },
+      ccusto: {
+        type: String
+      }
     },
     texto: {
       type: String,
