@@ -48,7 +48,7 @@ function cadastrarTicket(){
   })
 }
 
-describe.only('APITicket Test', function(){
+describe('APITicket Test', function(){
   this.beforeAll(async () => {
     app = await api
     const result = await cadastrarTicket()

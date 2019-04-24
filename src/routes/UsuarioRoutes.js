@@ -14,6 +14,7 @@ class UsuarioRoutes extends baseRoute {
 			method: 'POST',
 			config: {
 				tags: ['api'],
+				auth: false,
 				description: 'Cadastrar usuarios',
 				notes: 'Cadastra usuarios para autenticação no sistema',
 				validate: {
@@ -30,7 +31,7 @@ class UsuarioRoutes extends baseRoute {
 						filial: Joi.string().max(3).required(),
 						email: Joi.string().email({ minDomainAtoms: 2 }),
 						senha: Joi.string(),
-						admin: Joi.boolean().required()
+						admin: Joi.boolean()
 					}
 				},
 			},

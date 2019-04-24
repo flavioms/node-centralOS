@@ -30,7 +30,6 @@ function cadastrarUsuario(usuario){
   return app.inject({
     method: 'POST',
     url: '/users',
-    headers,
     payload: usuario
   })
 }
@@ -42,9 +41,10 @@ describe('ApiChamado Test', function(){
     MOCK_ID = JSON.parse(result.payload)._id
   })
   
-  it('POST em /users - Cadastra usuário', async () => {
+  it.only('POST em /users - Cadastra usuário', async () => {
     const result = await cadastrarUsuario(MOCK_USUARIO)
     const payload = JSON.parse(result.payload)
+    console.log(payload)
     assert.deepEqual(result.statusCode, 200)
     assert.deepEqual(payload.nome, 'Flavio')
   })

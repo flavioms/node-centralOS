@@ -36,7 +36,14 @@ const swaggerConfig = {
 }
 
 const app = new Hapi.Server({
-  port: process.env.PORT || 5000
+  port: process.env.PORT || 5000,
+  routes: {
+    cors: {
+        origin: ["*"],
+        headers: ["Accept", "Content-Type"],
+        additionalHeaders: ["X-Requested-With"]
+    }
+  }
 })
 
 function mapRoutes(instance, methods) {

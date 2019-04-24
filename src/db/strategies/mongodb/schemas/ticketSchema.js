@@ -63,13 +63,11 @@ const ticketSchema = new Mongoose.Schema({
       required: true
     },
     data: {
-      type: Date,
-      default: new Date().toLocaleString('pt-br')
+      type: Date
     }
   }],
   dtAbertura: {
-    type: Date,
-    default: new Date().toLocaleString('pt-br')
+    type: Date
   },
   dtEncerramento: {
     type: Date,

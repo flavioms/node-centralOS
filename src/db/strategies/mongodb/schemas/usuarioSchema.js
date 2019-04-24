@@ -28,7 +28,6 @@ const usuarioSchema = new Mongoose.Schema({
   admin: {
     type: Boolean,
     default: false,
-    required: true,
   },
   deleted: {
     type: Boolean,
