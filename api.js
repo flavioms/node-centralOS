@@ -39,9 +39,10 @@ const app = new Hapi.Server({
   port: process.env.PORT || 5000,
   routes: {
     cors: {
-        origin: ["*"],
-        headers: ["Accept", "Content-Type"],
-        additionalHeaders: ["X-Requested-With"]
+      origin: ["*"],
+      additionalHeaders: ['Authorization'],
+      headers: ["Access-Control-Allow-Origin","Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type", "CORELATION_ID"],
+      credentials: true
     }
   }
 })

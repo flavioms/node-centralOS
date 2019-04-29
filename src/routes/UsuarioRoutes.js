@@ -25,6 +25,7 @@ class UsuarioRoutes extends baseRoute {
 							authorization: Joi.string().optional().allow('')
 					}).unknown(),
 					payload: {
+						_id: Joi.string().optional().allow(''),
 						nome: Joi.string().max(100).required(),
 						ccusto: Joi.string().max(100).required(),
 						setor: Joi.string().max(100).required(),
@@ -38,11 +39,14 @@ class UsuarioRoutes extends baseRoute {
 			handler: async (request, headers) => {
 				const payload = request.payload
 				const senhaCripty = await PasswordHelper.hashPassword(payload.senha)
-				
+				if(payload._id){
+					delete payload._id
+				}
 				const user = {
 					...payload,
 					senha: senhaCripty
 				}
+				
 				return this.db.create(user)
 			}
 		}
@@ -58,7 +62,7 @@ class UsuarioRoutes extends baseRoute {
 				notes: 'Lista todos os usuários cadastrados no banco',
 				validate: {
 					headers: Joi.object({
-							authorization: Joi.string().required()
+						authorization: Joi.string().required()
 					}).unknown()
 				},
 			},
@@ -97,7 +101,7 @@ class UsuarioRoutes extends baseRoute {
 						setor: Joi.string().max(100),
 						filial: Joi.string().max(3),
 						email: Joi.string().email({ minDomainAtoms: 2 }),
-						senha: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
+						senha: Joi.string(),
 						admin: Joi.boolean()
 					}
 				}
@@ -105,9 +109,7 @@ class UsuarioRoutes extends baseRoute {
 			handler: async (request, headers) => {
 				const payload = request.payload;
 				const id = request.params.id;
-				if(payload.senha){
-					payload.senha = await PasswordHelper.hashPassword(payload.senha)
-				}
+				
 				return this.db.update(id, payload)
 			}
 		}

@@ -72,7 +72,7 @@ class TicketRoutes extends baseRoute {
         }
       },
       handler: (request, headers) => {
-        const payload = request.payload
+        const payload = request.payload;
         const id = request.params.id;
         return this.db.updatePush(id, payload)
       }

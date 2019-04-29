@@ -3,8 +3,9 @@ const api = require('../../api')
 let app = {}
 let MOCK_ID = ''
 let MOCK_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdldGluMC4wMDY0NDY5MDYyODY4MTM5OTE1QG9ybWVjLmNvbS5iciIsImlhdCI6MTU1MDQyNzU5M30.tWTCK-Rdn4FU-1Rl_MqL8rPUyRNaAckh2NDvbz4Bpvc'
+let MOCK_TOKEN2 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZsYXZpby5tYXJ0aW5zQG9ybWVjLmNvbS5iciIsIm5vbWUiOiJGbMOhdmlvIE1hcnRpbnMgZGEgU2lsdmEiLCJjY3VzdG8iOiIwMTAwMElOIiwic2V0b3IiOiJUSSIsImZpbGlhbCI6IjAxIiwiaWF0IjoxNTU2MjE5OTU2fQ.IWxTGWoU7GuoFdsZVmIJV9MgRd3eZgYwCd-e36mMH_I' 
 let headers = {
-  Authorization: MOCK_TOKEN
+  Authorization: MOCK_TOKEN2
 }
 let MOCK_USUARIO = {
   nome: 'Flavio',
@@ -41,10 +42,9 @@ describe('ApiChamado Test', function(){
     MOCK_ID = JSON.parse(result.payload)._id
   })
   
-  it.only('POST em /users - Cadastra usuário', async () => {
+  it('POST em /users - Cadastra usuário', async () => {
     const result = await cadastrarUsuario(MOCK_USUARIO)
     const payload = JSON.parse(result.payload)
-    console.log(payload)
     assert.deepEqual(result.statusCode, 200)
     assert.deepEqual(payload.nome, 'Flavio')
   })
@@ -71,7 +71,7 @@ describe('ApiChamado Test', function(){
     assert.deepEqual(result.statusCode, 400)
   })
   
-  it('GET em /users - Todos os usuários', async () => {
+  it.only('GET em /users - Todos os usuários', async () => {
     const result = await app.inject({
       method: 'GET',
       url: '/users',
