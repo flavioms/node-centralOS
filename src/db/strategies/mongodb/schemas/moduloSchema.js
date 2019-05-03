@@ -1,5 +1,9 @@
 const Mongoose = require('mongoose')
 const moduloSchema = new Mongoose.Schema({
+  sigla: {
+    type: String,
+    required: true
+  },
   nome: {
     type: String,
     required: true

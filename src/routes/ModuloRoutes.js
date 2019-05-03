@@ -23,6 +23,7 @@ class ModuloRoutes extends baseRoute {
 							authorization: Joi.string().optional().allow('')
 					}).unknown(),
 					payload: {
+						sigla: Joi.string().max(100).required(),
 						nome: Joi.string().max(100).required()
 					}
 				},
@@ -78,6 +79,7 @@ class ModuloRoutes extends baseRoute {
 						id: Joi.string().required()                
 					},
 					payload: {
+						sigla: Joi.string().max(100),
 						nome: Joi.string().max(100)
 					}
 				}
