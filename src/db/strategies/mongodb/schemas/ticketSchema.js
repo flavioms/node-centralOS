@@ -36,7 +36,7 @@ const ticketSchema = new Mongoose.Schema({
     }
   },
   suporte: {
-    type: ObjectId
+    type: String
   },
   timelapse: [{
     status: {
