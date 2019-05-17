@@ -28,6 +28,9 @@ const ticketSchema = new Mongoose.Schema({
     nome: {
       type: String
     },
+    email: {
+      type: String
+    },
     setor: {
       type: String
     },
@@ -49,6 +52,9 @@ const ticketSchema = new Mongoose.Schema({
   interacoes: [{
     usuario: {
       nome: {
+        type: String
+      },
+      email: {
         type: String
       },
       setor: {
@@ -77,4 +83,5 @@ const ticketSchema = new Mongoose.Schema({
     default: false
   }
 })
+
 module.exports = Mongoose.model('tickets', ticketSchema)

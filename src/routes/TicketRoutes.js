@@ -2,7 +2,6 @@ const baseRoute = require('./base/baseRoute')
 const Joi = require('joi')
 const moment = require('moment-timezone')
 const EnviarEmail = require('./../helpers/enviarEmail')
-const DATA_ATUAL = moment().tz("America/Sao_Paulo").format()
 
 class TicketRoutes extends baseRoute {
   constructor(db){
@@ -35,7 +34,7 @@ class TicketRoutes extends baseRoute {
             usuario: Joi.required(),
             suporte: Joi.string().allow('').optional(),
             dtAbertura: Joi.date().required(),
-            dtEncerramento: Joi.date().required(),
+            dtEncerramento: Joi.date().optional(),
             timelapse: Joi.array().optional(),
             interacoes: Joi.array().optional()
           }
@@ -107,7 +106,7 @@ class TicketRoutes extends baseRoute {
             usuario: Joi.required(),
             suporte: Joi.string().allow('').optional(),
             dtAbertura: Joi.date().required(),
-            dtEncerramento: Joi.date().required(),
+            dtEncerramento: Joi.date().optional(),
             timelapse: Joi.array().optional(),
             interacoes: Joi.array().optional()
           }
