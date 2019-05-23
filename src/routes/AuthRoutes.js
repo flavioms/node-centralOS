@@ -58,7 +58,7 @@ class AuthRoutes extends BaseRoute {
 						ccusto: user.ccusto,
 						setor: user.setor,
 						filial: user.filial,
-						suporte: user.suporte
+						admin: user.admin
 					}, this.secret)
 				}
 			}
